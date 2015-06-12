@@ -1,0 +1,19 @@
+body            { font-family: sans-serif; background-image: url('foodphotograph.jpg'); background-color: #333333}
+h1, h2, h3, h4       { color: #FFFFFF; }
+h1, h2          { font-family: 'Georgia', serif; margin: 0; }
+h1              { border-bottom: 2px solid #eee; }
+h2              { font-size: 1.2em; }
+
+p, dd, dt               { color: #CCCCCC;}
+
+a {text-decoration: none; color:#FFFFCC; font-size: .75em;}
+
+.pane {position:absolute; left: 25%; border: 2px solid;
+        border-radius: 25px; padding: 5px; margin: 5px; border-color: #999999; background-color: rgba(0, 0, 0, 0.5) }
+.header         {left:50%; text-align: center;}
+.name {width:50%;display: inline-block; float: left; color:#33FF00 }
+.description {width:80%;display: inline-block; float: left; color:#339966 }
+.price {text-align: right; width:22%; float: right; color:#FFFFCC}
+.editdeletepane{}
+
+.flash          { background: #cee5F5; }
