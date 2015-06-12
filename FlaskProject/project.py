@@ -50,6 +50,7 @@ def newMenuItem(restaurant_id):
         newMenuItem = MenuItem(name=request.form['newMenuItemName'], restaurant_id=restaurant_id)
         session.add(newMenuItem)
         session.commit()
+        flash("Success! New menu item added!")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         # for a GET request
@@ -63,6 +64,7 @@ def editMenuItem(restaurant_id, menu_id):
             menuitem.name = request.form['editMenuItemName']
         session.add(menuitem)
         session.commit()
+        flash("Success! Menu item edited!")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         # for a GET request
@@ -74,6 +76,7 @@ def deleteMenuItem(restaurant_id, menu_id):
     if request.method == 'POST':
         session.delete(menuitem)
         session.commit()
+        flash("Success! Menu item deleted!")
         return redirect(url_for('restaurantMenu', restaurant_id=restaurant_id))
     else:
         # for a GET request
@@ -84,4 +87,7 @@ if __name__ == '__main__':
     # server will reload everytime it sees a code change, also provides a
     # debugger in the browser
     app.debug = True
+    # message flashing
+    # used by Flask to create sessions for users
+    app.secret_key = 'a-real-super-secret-key'
     app.run(host = '0.0.0.0', port = 5000)
