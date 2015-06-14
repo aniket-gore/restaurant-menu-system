@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 app = Flask(__name__)
 
 from sqlalchemy import create_engine
@@ -38,7 +38,7 @@ def HelloWorld():
     return output
 
 # last '/' important to handle presence/absence of '/' in the URL
-@app.route('/restaurants/<int:restaurant_id>/', methods=['GET', 'POST'])
+@app.route('/restaurants/<int:restaurant_id>/menu', methods=['GET', 'POST'])
 def restaurantMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
     menuitems = session.query(MenuItem).filter_by(restaurant_id = restaurant_id)
@@ -81,6 +81,18 @@ def deleteMenuItem(restaurant_id, menu_id):
     else:
         # for a GET request
         return render_template('deletemenuitem.html', restaurant_id=restaurant_id, itemName=menuitem.name, menu_id=menu_id)
+
+#Make an API endpoint for GET request
+@app.route('/restaurants/<int:restaurant_id>/menu/JSON')
+def restaurantMenuJSON(restaurant_id):
+    menuitems = session.query(MenuItem).filter_by(restaurant_id = restaurant_id).all()
+    return jsonify(MenuItems=[menuitem.serialize for menuitem in menuitems])
+
+#Make an API endpoint for GET request
+@app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/JSON')
+def restaurantMenuItemJSON(restaurant_id, menu_id):
+    menuitem = session.query(MenuItem).filter_by(id = menu_id).one()
+    return jsonify(MenuItem=menuitem.serialize)
 
 # run only if the script is run from Python interpreter. Not if it is imported.
 if __name__ == '__main__':
